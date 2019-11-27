@@ -29,6 +29,10 @@ import org.gradoop.flink.model.impl.operators.combination.ReduceCombination;
 import org.gradoop.flink.util.FlinkAsciiGraphLoader;
 import org.gradoop.flink.util.GradoopFlinkConfig;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 /**
  * The program executes the following workflow:
  *
@@ -51,6 +55,27 @@ import org.gradoop.flink.util.GradoopFlinkConfig;
  * demo data ({@link #main(String[])}).
  */
 public class SocialNetworkAnalyticsBenchmark1 extends AbstractRunner {
+
+	private static Random random = new Random();
+
+	private static List<String> cityNames =
+			Arrays.asList("Anqiu", "Lisbon", "Kollam", "Ajmer", "Windhoek", "Kuching", "Antón_Lizardo", "Chiang_Mai",
+					"Larkana_District", "Tirunelveli", "Hanover", "Mỹ_Tho", "Isfahan", "Nanning", "Helsinki", "Meiktila", "Garoua", "Ma_Liu_Shui",
+					"Baharampur", "Cenxi", "Fayetteville", "Tambacounda", "Thanh_Hóa", "Mahishadal", "Haldia", "Chief", "Gia_lam", "Brussels", "Novo_Hamburgo",
+					"Colima", "Ústí_nad_Labem", "Iași", "Samarinda", "Khyber_Pakhtunkhwa", "Raichur", "Botou", "Cebu_City", "Fianarantosa",
+					"Changning", "Dalian", "Leuven", "Dar_es_Salaam", "Stuttgart", "České_Budějovice", "Makassar", "Liverpool", "Antwerp", "Kakinada",
+					"Rewari", "Gardēz", "Shahrekord", "Jiaganj_Azimganj", "Tianjin", "Copenhagen", "Kathmandu", "Batalanda", "Mysore", "Yongin", "Thane",
+					"Moscow_International_Business_Center", "Deyang", "Major_Cities", "New_York_City", "Montemorelos",
+					"Dali", "Owariasahi", "Bole",  "Benxi", "Sohag", "Faisalabad", "Raniganj", "Dublin", "Petrópolis", "Luanda", "Posadas",
+					"Corrientes", "Beiliu", "Yinchuan", "Montreal", "Erenhot", "Anqing", "Kananga", "Ma'anshan", "Athens", "Noida", "Khairpur", "Prague", "Raipur",
+					"Bogotá", "Kitwe", "Jimbaran", "Bahria_Town", "Yongkang_District", "Kadıköy", "Batna", "Islamabad", "Manipal", "Kolda", "Chaozhou", "Jimma",
+					"Manaus", "Serro", "El_Oued", "Friedberg", "Quảng_Ngãi", "Melbourne", "Coventry", "Bloemfontein", "Tezpur", "Ratmalana_Airport", "Jamshedpur",
+					"Chuzhou", "Medellín",  "Tuyên_Quang", "Kashipur", "Bhagalpur", "Nagasaki", "Puebla", "Richmond", "Qom", "Thrissur",
+					"New_York", "Niterói", "Chicago",  "Conghua", "Changge", "Bangkok", "Chibi", "Zinder", "Manchester", "Heidelberg", "Ermita", "Patna",
+					"Fuyang,", "Jodhpur",  "Hradec_Králové", "Ilmenau", "Indianapolis", "Bạc_Liêu", "Brisbane", "Unguja", "Flensburg",
+					"Hengyang", "Okazaki", "Thirthahalli", "Gao'an", "Kahuta", "Mexico_City", "Gaoping", "Jabalpur", "Zanzibar", "Pondicherry", "Temuco",
+					"Kinshasa", "Chaoyang", "Kurukshetra", "Suri", "Al_Mukalla", "Arad", "Midnapore", "Cartagena", "Rohtak", "Magelang", "Bhubaneswar",
+					"Harbin", "Krasnodar", "Cincinnati");
 
   /**
    * Runs the benchmark program.
@@ -171,8 +196,9 @@ public class SocialNetworkAnalyticsBenchmark1 extends AbstractRunner {
         // keep necessary vertex properties
         (current, transformed) -> {
           transformed.setLabel(current.getLabel());
-          transformed.setProperty(city, current.getPropertyValue(city));
-          transformed.setProperty(gender, current.getPropertyValue(gender));
+		  transformed.setProperty(city, cityNames.get(random.nextInt(cityNames.size())));
+//		  transformed.setProperty(city, current.getPropertyValue(city));
+		  transformed.setProperty(gender, current.getPropertyValue(gender));
           transformed.setProperty(label, current.getPropertyValue(birthday));
           return transformed;
         },
